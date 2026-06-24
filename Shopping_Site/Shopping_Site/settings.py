@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-56td!yfsf92mdo&)(v&du=&7ge$==a7u@o+^x$mm=e4@+81(^y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "nexbuy-django.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 
 # Application definition
