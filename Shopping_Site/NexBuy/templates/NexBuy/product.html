@@ -1,0 +1,226 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}NexBuy - Products{% endblock %}
+
+{% block active_products %}active{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'NexBuy/css/product.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- FILTER SLIDE-IN PANE -->
+    <div class="filter-overlay"></div>
+    <aside class="filter-sidebar">
+        <div class="filter-sidebar-header">
+            <h3>Filters</h3>
+            <button class="filter-close-btn" aria-label="Close filters">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+        <div class="filter-sidebar-content">
+            <!-- Price Filter -->
+            <div class="filter-section">
+                <h4>Price</h4>
+                <div class="price-slider-container">
+                    <input type="range" id="price-slider" min="0" max="2000" value="2000" class="slider">
+                    <div class="price-value-display">
+                        Max Price: <span id="price-value">$2000</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Filter -->
+            <div class="filter-section">
+                <h4>Brand</h4>
+                <ul class="filter-options-list">
+                    <li class="filter-option">
+                        <input type="checkbox" id="brand-apple" name="brand-apple">
+                        <label for="brand-apple">Apple</label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="checkbox" id="brand-samsung" name="brand-samsung">
+                        <label for="brand-samsung">Samsung</label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="checkbox" id="brand-sony" name="brand-sony">
+                        <label for="brand-sony">Sony</label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="checkbox" id="brand-google" name="brand-google">
+                        <label for="brand-google">Google</label>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Rating Filter -->
+            <div class="filter-section">
+                <h4>Rating</h4>
+                <ul class="filter-options-list">
+                    <li class="filter-option">
+                        <input type="radio" id="rating-all" name="rating" value="0" checked>
+                        <label for="rating-all">All Ratings</label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="radio" id="rating-4" name="rating" value="4">
+                        <label for="rating-4">
+                            <span class="stars">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph ph-star"></i>
+                            </span>
+                            & Up
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="radio" id="rating-3" name="rating" value="3">
+                        <label for="rating-3">
+                            <span class="stars">
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph-fill ph-star"></i>
+                                <i class="ph ph-star"></i>
+                                <i class="ph ph-star"></i>
+                            </span>
+                            & Up
+                        </label>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sort By Filter -->
+            <div class="filter-section">
+                <h4>Sort By</h4>
+                <ul class="filter-options-list">
+                    <li class="filter-option">
+                        <input type="radio" id="sort-popular" name="sort" value="popular" checked>
+                        <label for="sort-popular">Most Popular</label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="radio" id="sort-rated" name="sort" value="rated">
+                        <label for="sort-rated">Highly Rated</label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="radio" id="sort-low-high" name="sort" value="low-high">
+                        <label for="sort-low-high">Price: Low to High</label>
+                    </li>
+                    <li class="filter-option">
+                        <input type="radio" id="sort-high-low" name="sort" value="high-low">
+                        <label for="sort-high-low">Price: High to Low</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-wrapper">
+
+        <!-- CATEGORY BAR -->
+        <div class="category-bar">
+            <button onclick="window.location.href='?category=electronics';" class="category-btn {% if current_category == 'electronics' %}active{% endif %}">
+                <i class="ph ph-lightning"></i>
+                <span>Electronics</span>
+            </button>
+            <button onclick="window.location.href='?category=fashion';" class="category-btn {% if current_category == 'fashion' %}active{% endif %}">
+                <i class="ph ph-t-shirt"></i>
+                <span>Fashion</span>
+            </button>
+            <button onclick="window.location.href='?category=kids';" class="category-btn {% if current_category == 'kids' %}active{% endif %}">
+                <i class="ph ph-baby"></i>
+                <span>Kids Section</span>
+            </button>
+            <button onclick="window.location.href='?category=home';" class="category-btn {% if current_category == 'home' %}active{% endif %}">
+                <i class="ph ph-couch"></i>
+                <span>Home Appliances</span>
+            </button>
+            <button onclick="window.location.href='?category=kitchen';" class="category-btn {% if current_category == 'kitchen' %}active{% endif %}">
+                <i class="ph ph-knife"></i>
+                <span>Kitchen</span>
+            </button>
+            <button onclick="window.location.href='?category=groceries';" class="category-btn {% if current_category == 'groceries' %}active{% endif %}">
+                <i class="ph ph-carrot"></i>
+                <span>Groceries</span>
+            </button>
+             <button onclick="window.location.href='?category=health';" class="category-btn {% if current_category == 'health' %}active{% endif %}">
+                <i class="ph ph-first-aid-kit"></i>
+                <span>Health</span>
+            </button>
+            <button onclick="window.location.href='?category=gaming';" class="category-btn {% if current_category == 'gaming' %}active{% endif %}">
+                <i class="ph ph-game-controller"></i>
+                <span>Gaming</span>
+            </button>
+        </div>
+        
+        <div class="product-page-container">
+            <!-- FILTER TOGGLE BUTTON -->
+            <button class="filter-toggle-btn">
+                <i class="ph ph-sliders"></i>
+                <span>Filters</span>
+            </button>
+
+            <!-- PRODUCT GRID -->
+            <section class="product-grid-container">
+                <h2 class="product-grid-header">
+                    {% if current_category == 'electronics' %}Electronics
+                    {% elif current_category == 'fashion' %}Fashion
+                    {% elif current_category == 'kids' %}Kids Section
+                    {% elif current_category == 'home' %}Home Appliances
+                    {% elif current_category == 'kitchen' %}Kitchen
+                    {% elif current_category == 'groceries' %}Groceries
+                    {% elif current_category == 'health' %}Health
+                    {% elif current_category == 'gaming' %}Gaming
+                    {% endif %}
+                </h2>
+                
+                <div class="product-grid">
+
+                    {% for product in products %}
+                    <!-- Product Card -->
+                    <div class="product-card-large">
+                        <div class="product-image-wrapper">
+                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{{ product.image_url }}{% endif %}" alt="{{ product.name }}" class="product-image" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3csvg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;300&quot; height=&quot;200&quot; viewBox=&quot;0 0 300 200&quot;%3e%3crect width=&quot;100%25&quot; height=&quot;100%25&quot; fill=&quot;%23151520&quot;/%3e%3cg fill=&quot;none&quot; stroke=&quot;%23f97316&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; opacity=&quot;0.4&quot; transform=&quot;translate(138, 70)&quot;%3e%3crect x=&quot;2&quot; y=&quot;7&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot; ry=&quot;2&quot;/%3e%3cpath d=&quot;M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16&quot;/%3e%3c/g%3e%3ctext x=&quot;50%25&quot; y=&quot;62%25&quot; text-anchor=&quot;middle&quot; font-family=&quot;system-ui, sans-serif&quot; font-size=&quot;12&quot; font-weight=&quot;500&quot; fill=&quot;%23a0a0b0&quot;%3eNo Image Available%3c/text%3e%3c/svg%3e';">
+                            {% if product.discount %}
+                                <span class="discount-label">-{{ product.discount }}%</span>
+                            {% endif %}
+                            {% if product.bank_offer %}
+                                <span class="bank-offer-label">{{ product.bank_offer }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-card-content">
+                            <h3 class="product-title">{{ product.name }}</h3>
+                            <p class="product-description-small">{{ product.description }}</p>
+                            <div class="product-rating">
+                                {% for i in product.star_list.full %}<i class="ph-fill ph-star"></i>{% endfor %}
+                                {% for i in product.star_list.half %}<i class="ph-fill ph-star-half"></i>{% endfor %}
+                                {% for i in product.star_list.empty %}<i class="ph ph-star"></i>{% endfor %}
+                                <span>({{ product.rating }})</span>
+                            </div>
+                            <div class="product-price-large">
+                                <span class="price-new-large">${{ product.price }}</span>
+                                {% if product.old_price %}
+                                    <span class="price-old-large">${{ product.old_price }}</span>
+                                {% endif %}
+                            </div>
+                            <button class="add-to-cart-btn" data-product="{{ product.name }}" data-price="{{ product.price }}" data-image="{% if product.image %}{{ product.image.url }}{% else %}{{ product.image_url }}{% endif %}" data-currency="$">
+                                <i class="ph ph-shopping-cart"></i>
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; padding: 3rem;">No products found in this category.</p>
+                    {% endfor %}
+
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'NexBuy/js/product.js' %}"></script>
+{% endblock %}

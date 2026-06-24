@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed Successfully - NexBuy</title>
+    
+    <!-- GSAP & Canvas Confetti -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{% static 'NexBuy/css/order_success.css' %}">
+</head>
+<body>
+
+    <header class="header">
+        <a href="{% url 'index' %}" class="logo">NexBuy</a>
+    </header>
+
+    <main>
+        <div class="success-container">
+            <!-- Pulsing checkmark SVG -->
+            <div class="checkmark-wrapper">
+                <svg class="checkmark-svg" viewBox="0 0 52 52">
+                    <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+
+            <h1 class="success-title">Order Placed Successfully!</h1>
+            <p class="success-message">Thank you for shopping with us. Your items are being packed and will ship shortly.</p>
+            
+            <!-- SuperCoins counter section -->
+            <div class="supercoins-card">
+                <div class="coin-icon-wrapper">
+                    <i class="ph-fill ph-coins gold-coin"></i>
+                </div>
+                <div class="supercoins-info">
+                    <p class="supercoins-label">SuperCoins Earned</p>
+                    <h2 class="supercoins-val" id="supercoins-val">0</h2>
+                </div>
+            </div>
+
+            <!-- Scratch Card Reward Widget -->
+            <div class="scratch-card-container">
+                <h3>Scratch Card Reward</h3>
+                <p class="scratch-card-subtitle">You won 1 scratch card for this purchase!</p>
+                
+                <div class="scratch-card-wrapper">
+                    <!-- Beneath the scratch layer -->
+                    <div class="reward-reveal" id="reward-reveal">
+                        <div class="reward-emoji">🎉</div>
+                        <h4 id="reward-code">NEXBUY50</h4>
+                        <p id="reward-desc">Flat $50 off on your next purchase</p>
+                        <button class="copy-coupon-btn" id="copy-coupon-btn">
+                            <i class="ph ph-copy"></i> Copy Code
+                        </button>
+                    </div>
+                    <!-- The scratch canvas -->
+                    <canvas id="scratch-canvas" width="320" height="180"></canvas>
+                </div>
+                <p class="scratch-hint" id="scratch-hint">Scratch the silver card to reveal your reward!</p>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="success-actions">
+                <a href="{% url 'product' %}" class="btn-primary">
+                    <i class="ph ph-shopping-bag"></i> Continue Shopping
+                </a>
+                <a href="{% url 'index' %}" class="btn-secondary">
+                    <i class="ph ph-house"></i> Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Script -->
+    <script src="{% static 'NexBuy/js/order_success.js' %}"></script>
+</body>
+</html>

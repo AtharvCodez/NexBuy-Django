@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NexBuy - Your Online Shopping Destination{% endblock %}</title>
+
+    <!-- GSAP for Smooth Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Shared/Common Stylesheet -->
+    <link rel="stylesheet" href="{% static 'NexBuy/css/base.css' %}?v=3.1">
+
+    <script>
+        window.isUserAuthenticated = "{{ user.is_authenticated }}" === "True";
+    </script>
+    
+    <!-- Page Specific Stylesheet -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div class="preloader">
+        <div class="loader-container">
+            <i class="ph ph-truck"></i>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav>
+        <a href="{% url 'index' %}" class="logo" style="cursor: pointer; background: none; -webkit-text-fill-color: initial; text-decoration: none;">
+            <span style="color: var(--accent-primary);">Nex</span><span style="color: white;">Buy</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="{% url 'index' %}" class="{% block active_home %}{% endblock %}">Home</a></li>
+            <li><a href="{% url 'index' %}#features">Features</a></li>
+            <li><a href="{% url 'product' %}" class="{% block active_products %}{% endblock %}">Products</a></li>
+            <li><a href="{% url 'index' %}#pricing">Deals</a></li>
+            <li><a href="{% url 'testimonial' %}" class="{% block active_reviews %}{% endblock %}">Reviews</a></li>
+            <li><a href="{% url 'contact' %}" class="{% block active_contact %}{% endblock %}">Contact</a></li>
+            <li><a href="{% url 'aboutus' %}" class="{% block active_about %}{% endblock %}">About Us</a></li>
+        </ul>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 1.5rem;">
+            <div id="search-wrapper" style="display: flex; align-items: center; position: relative;">
+                <input type="text" id="navbar-search-input" placeholder="Search products..." style="width: 0; padding: 0; opacity: 0; pointer-events: none; background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; color: white; font-size: 0.85rem; outline: none; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); height: 32px;">
+                <i class="ph ph-magnifying-glass" id="nav-search-trigger" style="font-size: 1.4rem; cursor: pointer; color: var(--accent-primary); transition: 0.2s;"></i>
+            </div>
+            <div id="nav-cart-trigger" style="position: relative; cursor: pointer; margin-right: 0.5rem;">
+                <i class="ph ph-shopping-cart" style="font-size: 1.4rem; color: var(--accent-primary);"></i>
+                <span style="position: absolute; top: -6px; right: -8px; background: var(--accent-primary); color: white; font-size: 0.65rem; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">2</span>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="profile-dropdown-container">
+                    <button class="profile-dropdown-trigger" aria-label="User Profile Menu">
+                        {% if user.profile.profile_picture %}
+                            <img src="{{ user.profile.profile_picture.url }}" alt="Profile Photo" class="profile-avatar-nav">
+                        {% else %}
+                            <i class="ph ph-user-circle"></i>
+                        {% endif %}
+                        <span class="profile-name-short">{{ user.first_name|default:user.email }}</span>
+                        <i class="ph ph-caret-down"></i>
+                    </button>
+                    <div class="profile-dropdown-menu">
+                        <div class="dropdown-header" style="display: flex; align-items: center; gap: 12px; padding: 0.75rem 1.25rem;">
+                            {% if user.profile.profile_picture %}
+                                <img src="{{ user.profile.profile_picture.url }}" alt="Profile Photo" style="width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--accent-primary);">
+                            {% else %}
+                                <i class="ph ph-user-circle" style="font-size: 2.4rem; color: var(--accent-primary);"></i>
+                            {% endif %}
+                            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                <p class="dropdown-user-name" style="margin: 0; font-weight: 700; color: white;">{{ user.first_name|default:user.email }}</p>
+                                <p class="dropdown-user-email" style="margin: 0; font-size: 0.75rem; color: var(--text-secondary);">{{ user.email }}</p>
+                            </div>
+                        </div>
+                        <hr class="dropdown-divider">
+                        <a href="{% url 'profile' %}" class="dropdown-item"><i class="ph ph-user"></i> Edit Profile</a>
+                        <a href="{% url 'orders' %}" class="dropdown-item"><i class="ph ph-package"></i> My Orders</a>
+                        <a href="{% url 'settings' %}" class="dropdown-item"><i class="ph ph-gear"></i> Settings</a>
+                        <a href="{% url 'change_password' %}" class="dropdown-item"><i class="ph ph-key"></i> Change Password</a>
+                        <hr class="dropdown-divider">
+                        <a href="{% url 'logout' %}" class="dropdown-item logout-item"><i class="ph ph-sign-out"></i> Sign Out</a>
+                    </div>
+                </div>
+            {% else %}
+                <a href="{% url 'sign_in' %}" class="nav-cta" style="text-decoration: none;">
+                    Sign In
+                </a>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <!-- STICKY BOTTOM NAV (for mobile) -->
+    <div class="sticky-bottom-nav">
+        <a href="{% url 'index' %}" class="bottom-nav-link">
+            <i class="ph ph-sparkle"></i>
+            <span>Home</span>
+        </a>
+        <a href="{% url 'product' %}" class="bottom-nav-link">
+            <i class="ph ph-shopping-bag-open"></i>
+            <span>Products</span>
+        </a>
+        <a href="{% url 'index' %}#pricing" class="bottom-nav-link">
+            <i class="ph ph-tag"></i>
+            <span>Pricing</span>
+        </a>
+        <a href="{% url 'testimonial' %}" class="bottom-nav-link">
+            <i class="ph ph-star"></i>
+            <span>Reviews</span>
+        </a>
+        <a href="{% url 'contact' %}" class="bottom-nav-link">
+            <i class="ph ph-star"></i>
+            <span>Contact</span>
+        </a>
+        <a href="{% url 'aboutus' %}" class="bottom-nav-link">
+            <i class="ph ph-info"></i>
+            <span>About Us</span>
+        </a>
+    </div>
+
+    <!-- MAIN PAGE CONTENT -->
+    {% block content %}{% endblock %}
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Deals</a></li>
+                    <li><a href="{% url 'product' %}?category=electronics">Electronics</a></li>
+                    <li><a href="{% url 'product' %}?category=fashion">Fashion</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="{% url 'aboutus' %}">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Licenses</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 NexBuy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- AI ASSISTANT FAB -->
+    <button class="ai-assistant-fab" aria-label="Open AI Assistant">
+        <i class="ph ph-sparkle"></i>
+        <span class="ai-tooltip">How can I help you?</span>
+    </button>
+
+
+
+    <!-- CART DRAWER -->
+    <div id="cart-drawer" style="position: fixed; right: -400px; top: 0; width: 400px; height: 100%; background: rgba(10, 10, 15, 0.95); border-left: 1px solid rgba(255, 255, 255, 0.05); box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5); z-index: 2000; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(20px); display: flex; flex-direction: column;">
+        <div style="padding: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-size: 1.25rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 8px;">
+                <i class="ph ph-shopping-cart" style="color: var(--accent-primary);"></i> Your Cart
+            </h3>
+            <i class="ph ph-x" id="close-cart" style="font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; transition: 0.3s;"></i>
+        </div>
+        
+        <!-- Cart Items Container -->
+        <div style="flex: 1; overflow-y: auto; padding: 24px;" id="cart-drawer-items">
+            <!-- Dynamically populated by base.js -->
+        </div>
+        
+        <!-- Cart Footer -->
+        <div style="padding: 24px; border-top: 1px solid rgba(255, 255, 255, 0.05); background: rgba(255, 255, 255, 0.01);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                <span style="color: var(--text-secondary);">Subtotal</span>
+                <span style="color: white; font-weight: 700; font-size: 1.1rem;" id="cart-drawer-subtotal">₹0</span>
+            </div>
+            <button id="checkout-btn" style="width: 100%; padding: 14px; background: var(--accent-primary); border: none; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; transition: 0.3s;">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+
+    <!-- Shared/Common JS -->
+    <script src="{% static 'NexBuy/js/base.js' %}?v=2.0"></script>
+    
+    <!-- Page Specific JS -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

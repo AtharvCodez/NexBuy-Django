@@ -1,0 +1,219 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}My Orders - NexBuy{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'NexBuy/css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="page-wrapper">
+        <section class="orders-section">
+            <h1 class="page-title">Your Orders</h1>
+            <p class="page-subtitle">Track, view, and manage your recent bookings and returns.</p>
+
+            <!-- TOAST MESSAGE FROM BACKEND -->
+            {% if messages %}
+                <div class="alert-container">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <i class="ph ph-info"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="orders-list">
+                {% for order in orders %}
+                    <div class="order-card">
+                        <!-- Order Card Header Details -->
+                        <div class="order-card-header">
+                            <div class="header-meta">
+                                <div class="meta-col">
+                                    <span class="meta-label">ORDER PLACED</span>
+                                    <span class="meta-value">{{ order.created_at|date:"F d, Y" }}</span>
+                                </div>
+                                <div class="meta-col">
+                                    <span class="meta-label">TOTAL</span>
+                                    <span class="meta-value">
+                                        {% if order.total_rupees > 0 %}₹{{ order.total_rupees|floatformat:2 }}{% endif %}
+                                        {% if order.total_dollars > 0 %}
+                                            {% if order.total_rupees > 0 %} + {% endif %}${{ order.total_dollars|floatformat:2 }}
+                                        {% endif %}
+                                    </span>
+                                </div>
+                                <div class="meta-col">
+                                    <span class="meta-label">PAYMENT MODE</span>
+                                    <span class="meta-value">{{ order.payment_mode }}</span>
+                                </div>
+                            </div>
+                            <div class="header-right">
+                                <span class="order-id-label">ORDER # {{ order.order_number }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Order Card Content Body -->
+                        <div class="order-card-body">
+                            <div class="status-indicator">
+                                <span class="status-badge status-{{ order.status }}">
+                                    {% if order.status == 'placed' %}Order Placed
+                                    {% elif order.status == 'shipped' %}Shipped
+                                    {% elif order.status == 'delivered' %}Delivered
+                                    {% elif order.status == 'returning' %}Return Requested
+                                    {% elif order.status == 'returned' %}Returned
+                                    {% endif %}
+                                </span>
+                                <span class="status-date">
+                                    {% if order.status == 'placed' %}Awaiting shipping dispatch.
+                                    {% elif order.status == 'shipped' %}Item is in transit.
+                                    {% elif order.status == 'delivered' %}Delivered to destination.
+                                    {% elif order.status == 'returning' %}Return is under process.
+                                    {% elif order.status == 'returned' %}Return completed and refunded.
+                                    {% endif %}
+                                </span>
+                            </div>
+
+                            <div class="order-items">
+                                {% for item in order.items.all %}
+                                    <div class="order-item-row">
+                                        <img src="{{ item.image_url }}" alt="{{ item.product_name }}" class="item-img" onerror="this.onerror=null; this.src='data:image/svg+xml;charset=UTF-8,%3csvg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;100&quot; height=&quot;100&quot; viewBox=&quot;0 0 100 100&quot;%3e%3crect width=&quot;100%25&quot; height=&quot;100%25&quot; fill=&quot;%23151520&quot;/%3e%3ctext x=&quot;50%25&quot; y=&quot;55%25&quot; text-anchor=&quot;middle&quot; font-family=&quot;system-ui, sans-serif&quot; font-size=&quot;10&quot; fill=&quot;%23a0a0b0&quot;%3eNo Image%3c/text%3e%3c/svg%3e';">
+                                        <div class="item-details">
+                                            <h4 class="item-title">{{ item.product_name }}</h4>
+                                            <p class="item-meta">Qty: {{ item.quantity }} | Price: {{ item.currency }}{{ item.price }}</p>
+                                        </div>
+                                        <div class="item-actions">
+                                            <a href="{% url 'product' %}" class="btn-buy-again">Buy it again</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Order Card Footer Options -->
+                        <div class="order-card-footer">
+                            <div class="footer-actions">
+                                {% if order.status == 'placed' or order.status == 'shipped' or order.status == 'delivered' %}
+                                    <button class="btn-action btn-return" 
+                                            data-action-url="{% url 'return_order' order.id %}" 
+                                            data-order-number="{{ order.order_number }}">
+                                        Return Order
+                                    </button>
+                                {% endif %}
+                                {% if order.status == 'returning' or order.status == 'returned' %}
+                                    <div class="return-details-box">
+                                        <strong>Return Details:</strong> {{ order.return_reason }} (on {{ order.return_date|date:"M d, Y" }})
+                                    </div>
+                                {% endif %}
+                                <button class="btn-action-outline btn-toggle-details">View Details</button>
+                            </div>
+                            
+                            <!-- Additional details (hidden by default) -->
+                            <div class="extra-details-pane" style="display: none;">
+                                <hr class="details-divider">
+                                <h3>Delivery Information</h3>
+                                <p><strong>Shipping Address:</strong> {{ request.user.profile.street_address|default:"No shipping address provided. Update in Settings." }}, {{ request.user.profile.city|default:"" }} {{ request.user.profile.state|default:"" }} {{ request.user.profile.zip_code|default:"" }}</p>
+                                <p><strong>Estimated Delivery Date:</strong> {{ order.created_at|date:"F d, Y" }} (Completed)</p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="empty-orders-card">
+                        <i class="ph ph-package"></i>
+                        <h2>No orders found</h2>
+                        <p>Looks like you haven't booked any orders yet.</p>
+                        <a href="{% url 'product' %}" class="btn-shop">Explore Products</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+    <!-- RETURN MODAL DIALOG -->
+    <div class="modal-overlay" id="return-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Request a Return</h2>
+                <button class="btn-close-modal" id="close-return-modal"><i class="ph ph-x"></i></button>
+            </div>
+            <form method="POST" id="return-form">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <p class="modal-subtitle">Requesting return for Order <strong id="modal-order-number"></strong></p>
+                    
+                    <div class="form-group">
+                        <label for="return-reason">Reason for returning:</label>
+                        <select name="reason" id="return-reason" class="form-select" required>
+                            <option value="" disabled selected>Select a reason</option>
+                            <option value="Wrong item sent">Wrong item sent</option>
+                            <option value="Item damaged or defective">Item damaged or defective</option>
+                            <option value="Performance not as expected">Performance not as expected</option>
+                            <option value="Better price found elsewhere">Better price found elsewhere</option>
+                            <option value="Changed mind / No longer needed">Changed mind / No longer needed</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="return-comments">Additional comments (optional):</label>
+                        <textarea name="comments" id="return-comments" class="form-textarea" rows="4" placeholder="Provide more details about your request..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-modal-cancel" id="cancel-return-btn">Cancel</button>
+                    <button type="submit" class="btn-modal-submit">Submit Return Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT FOR ACTIONS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const returnButtons = document.querySelectorAll('.btn-return');
+            const returnModal = document.getElementById('return-modal');
+            const returnForm = document.getElementById('return-form');
+            const cancelBtn = document.getElementById('cancel-return-btn');
+            const closeBtn = document.getElementById('close-return-modal');
+
+            returnButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const actionUrl = btn.getAttribute('data-action-url');
+                    const orderNum = btn.getAttribute('data-order-number');
+                    document.getElementById('modal-order-number').textContent = orderNum;
+                    returnForm.action = actionUrl;
+                    returnModal.classList.add('active');
+                });
+            });
+
+            const hideModal = () => {
+                returnModal.classList.remove('active');
+            };
+
+            if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+            if (closeBtn) closeBtn.addEventListener('click', hideModal);
+            
+            // Close modal on clicking overlay background
+            returnModal.addEventListener('click', (e) => {
+                if (e.target === returnModal) {
+                    hideModal();
+                }
+            });
+
+            // Toggle order details expansion
+            const toggleDetailBtns = document.querySelectorAll('.btn-toggle-details');
+            toggleDetailBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const orderCard = btn.closest('.order-card');
+                    const detailsPane = orderCard.querySelector('.extra-details-pane');
+                    if (detailsPane.style.display === 'none') {
+                        detailsPane.style.display = 'block';
+                        btn.textContent = 'Hide Details';
+                    } else {
+                        detailsPane.style.display = 'none';
+                        btn.textContent = 'View Details';
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

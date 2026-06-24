@@ -1,0 +1,112 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}User Profile - NexBuy{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'NexBuy/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="profile-main-container">
+    <div class="profile-card">
+        <div class="profile-card-header">
+            <h2>Account Profile</h2>
+            <p>Update your personal details and avatar image</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+            
+            <!-- Avatar Upload Section -->
+            <div class="avatar-upload-group">
+                <div class="avatar-preview-wrapper">
+                    {% if user.profile.profile_picture %}
+                        <img id="avatar-preview" src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="avatar-image-preview">
+                    {% else %}
+                        <div id="avatar-placeholder" class="avatar-placeholder-preview">
+                            <i class="ph ph-user"></i>
+                        </div>
+                        <img id="avatar-preview" src="" alt="Profile Picture" class="avatar-image-preview" style="display: none;">
+                    {% endif %}
+                    <label for="profile-picture-input" class="avatar-edit-badge" title="Change Avatar">
+                        <i class="ph ph-camera"></i>
+                    </label>
+                </div>
+                <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" class="file-input-hidden">
+                <span class="file-name-hint" id="file-name-hint">No file chosen</span>
+            </div>
+
+            <!-- Profile Info Fields -->
+            <div class="input-group">
+                <input type="text" id="profile-name" name="name" class="input-field" placeholder=" " required value="{{ user.first_name }}">
+                <label for="profile-name" class="input-label">Full Name</label>
+            </div>
+
+            <div class="input-group input-group-disabled">
+                <input type="email" id="profile-email" class="input-field" placeholder=" " disabled value="{{ user.email }}">
+                <label for="profile-email" class="input-label">Email Address (Primary)</label>
+                <span class="field-info-text"><i class="ph ph-lock"></i> Email cannot be modified</span>
+            </div>
+
+            <!-- Submit & Action Buttons -->
+            <div class="profile-actions">
+                <button type="submit" class="submit-btn">
+                    <i class="ph ph-floppy-disk"></i> Save Changes
+                </button>
+                <a href="{% url 'index' %}" class="cancel-btn">
+                    Back to Shop
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- TOAST NOTIFICATION -->
+{% if messages %}
+    <div id="toast-notification" class="toast-notification show">
+        <i class="ph ph-check-circle"></i>
+        {% for message in messages %}
+            <span>{{ message }}</span>
+        {% endfor %}
+    </div>
+    <script>
+        setTimeout(() => {
+            const toast = document.getElementById('toast-notification');
+            if (toast) toast.classList.remove('show');
+        }, 3000);
+    </script>
+{% endif %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const fileInput = document.getElementById("profile-picture-input");
+        const avatarPreview = document.getElementById("avatar-preview");
+        const avatarPlaceholder = document.getElementById("avatar-placeholder");
+        const fileNameHint = document.getElementById("file-name-hint");
+
+        if (fileInput) {
+            fileInput.addEventListener("change", function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Update text indicator
+                    fileNameHint.textContent = file.name;
+                    
+                    // Create URL object for visual preview
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        if (avatarPreview) {
+                            avatarPreview.src = e.target.result;
+                            avatarPreview.style.display = "block";
+                        }
+                        if (avatarPlaceholder) {
+                            avatarPlaceholder.style.display = "none";
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

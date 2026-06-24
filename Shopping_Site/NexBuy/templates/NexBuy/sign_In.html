@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexBuy - Sign In / Sign Up</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+
+    <link rel="stylesheet" href="../../static/NexBuy/css/sign_in.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">NexBuy</a>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <div class="flip-card {% if error and request.POST.action == 'login' %}flipped{% endif %}" id="flipCard">
+                <div class="flip-card-inner">
+                    <!-- Sign Up Form -->
+                    <div class="flip-card-front">
+                        <div class="form-toggle">
+                            <button class="toggle-btn active" id="show-signup">Sign Up</button>
+                            <button class="toggle-btn" id="go-to-login">Login</button>
+                        </div>
+                        <h1>Create Account</h1>
+                        {% if error and request.POST.action == 'signup' %}
+                        <div class="error-message" style="color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 0.75rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; font-weight: 500; font-size: 0.9rem;">
+                            {{ error }}
+                        </div>
+                        {% endif %}
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="signup">
+                            <div class="input-group">
+                                <input type="text" id="signup-name" name="name" class="input-field" placeholder=" " required value="{{ request.POST.name }}">
+                                <label for="signup-name" class="input-label">Full Name</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" id="signup-email" name="email" class="input-field" placeholder=" " required value="{{ request.POST.email }}">
+                                <label for="signup-email" class="input-label">Email</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="signup-password" name="password" class="input-field" placeholder=" "
+                                    required>
+                                <label for="signup-password" class="input-label">Password</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="confirm-password" name="confirm-password" class="input-field" placeholder=" "
+                                    required>
+                                <label for="confirm-password" class="input-label">Confirm Password</label>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                Create Account
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Login Form -->
+                    <div class="flip-card-back">
+                        <div class="form-toggle">
+                            <button class="toggle-btn" id="go-to-signup">Sign Up</button>
+                            <button class="toggle-btn active" id="show-login">Login</button>
+                        </div>
+                        <h1>Welcome Back</h1>
+                        {% if error and request.POST.action == 'login' %}
+                        <div class="error-message" style="color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 0.75rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; font-weight: 500; font-size: 0.9rem;">
+                            {{ error }}
+                        </div>
+                        {% endif %}
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="login">
+                            <div class="input-group">
+                                <input type="email" id="login-email" name="email" class="input-field" placeholder=" " required value="{{ request.POST.email }}">
+                                <label for="login-email" class="input-label">Email</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="login-password" name="password" class="input-field" placeholder=" " required>
+                                <label for="login-password" class="input-label">Password</label>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                Sign In
+                            </button>
+                        </form>
+                        <div class="separator">OR</div>
+                        <button class="submit-btn" style="background-color: #333; margin-bottom: 1.5rem;">Use a sign-in
+                            code</button>
+                        <div class="extra-options">
+                            <a href="#" class="forgot-password">Forgot password?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="Product.html">New Arrivals</a></li>
+                    <li><a href="Product.html">Deals</a></li>
+                    <li><a href="Product.html">Electronics</a></li>
+                    <li><a href="Product.html">Fashion</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="aboutUs.html">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Track Order</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Licenses</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 NexBuy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../../static/NexBuy/js/sign_in.js"></script>
+</body>
+
+</html>

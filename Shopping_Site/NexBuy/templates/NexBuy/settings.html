@@ -1,0 +1,197 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}Account Settings - NexBuy{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'NexBuy/css/settings.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="page-wrapper">
+        <section class="settings-section">
+            <h1 class="page-title">Your Account Settings</h1>
+            <p class="page-subtitle">Update your personal information, address, and shopping preferences.</p>
+
+            <!-- ALERTS AND NOTIFICATIONS -->
+            {% if messages %}
+                <div class="alert-container">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            <i class="ph ph-info"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST" enctype="multipart/form-data" class="settings-form">
+                {% csrf_token %}
+                
+                <div class="settings-grid">
+                    <!-- LEFT COLUMN: Profile and Preferences -->
+                    <div class="settings-col">
+                        <!-- Profile Card -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <i class="ph ph-user-gear"></i>
+                                <h2>Profile Information</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="avatar-upload-group">
+                                    <div class="avatar-preview-wrapper">
+                                        {% if profile.profile_picture %}
+                                            <img id="settings-avatar-preview" src="{{ profile.profile_picture.url }}" alt="Profile Photo" class="settings-avatar">
+                                        {% else %}
+                                            <div id="settings-avatar-placeholder" class="settings-avatar-placeholder">
+                                                <i class="ph ph-user"></i>
+                                            </div>
+                                            <img id="settings-avatar-preview" src="" alt="Profile Photo" class="settings-avatar" style="display: none;">
+                                        {% endif %}
+                                        <label for="profile-picture-input" class="avatar-edit-badge" title="Change Avatar">
+                                            <i class="ph ph-camera"></i>
+                                        </label>
+                                    </div>
+                                    <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" class="file-input-hidden">
+                                    <span class="file-name-hint" id="file-name-hint">Click badge to upload</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" id="name" name="name" class="form-input" value="{{ request.user.first_name }}" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone_number">Phone Number</label>
+                                    <input type="text" id="phone_number" name="phone_number" class="form-input" value="{{ profile.phone_number|default:'' }}" placeholder="e.g. +91 9876543210">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" class="form-input form-input-disabled" value="{{ request.user.email }}" disabled>
+                                    <span class="input-hint"><i class="ph ph-lock"></i> Email cannot be updated for security.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Preferences Card -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <i class="ph ph-gear"></i>
+                                <h2>Site Preferences</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="preferred_language">Preferred Language</label>
+                                    <select id="preferred_language" name="preferred_language" class="form-select">
+                                        <option value="English" {% if profile.preferred_language == 'English' %}selected{% endif %}>English</option>
+                                        <option value="Hindi" {% if profile.preferred_language == 'Hindi' %}selected{% endif %}>Hindi (हिन्दी)</option>
+                                        <option value="Spanish" {% if profile.preferred_language == 'Spanish' %}selected{% endif %}>Spanish (Español)</option>
+                                        <option value="French" {% if profile.preferred_language == 'French' %}selected{% endif %}>French (Français)</option>
+                                    </select>
+                                </div>
+
+                                <div class="checkbox-group">
+                                    <input type="checkbox" id="email_notifications" name="email_notifications" {% if profile.email_notifications %}checked{% endif %}>
+                                    <label for="email_notifications">Enable Email Notifications & Offers</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN: Address and Security -->
+                    <div class="settings-col">
+                        <!-- Address Card -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <i class="ph ph-map-pin"></i>
+                                <h2>Default Shipping Address</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="street_address">Street Address</label>
+                                    <input type="text" id="street_address" name="street_address" class="form-input" value="{{ profile.street_address|default:'' }}" placeholder="e.g. 123 Main St, Apartment 4B">
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input type="text" id="city" name="city" class="form-input" value="{{ profile.city|default:'' }}" placeholder="e.g. Bhubaneswar">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="state">State</label>
+                                        <input type="text" id="state" name="state" class="form-input" value="{{ profile.state|default:'' }}" placeholder="e.g. Odisha">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="zip_code">ZIP / Postal Code</label>
+                                        <input type="text" id="zip_code" name="zip_code" class="form-input" value="{{ profile.zip_code|default:'' }}" placeholder="e.g. 751030">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="country">Country</label>
+                                        <input type="text" id="country" name="country" class="form-input" value="{{ profile.country|default:'India' }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Settings Card -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <i class="ph ph-shield-check"></i>
+                                <h2>Login & Security</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="security-row">
+                                    <div class="security-details">
+                                        <h3>Password</h3>
+                                        <p>Change your secure password frequently to keep your shopping transactions safe.</p>
+                                    </div>
+                                    <a href="{% url 'change_password' %}" class="btn-security-action">Update Password</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button Bar -->
+                <div class="form-submit-bar">
+                    <a href="{% url 'index' %}" class="btn-settings-cancel">Back to Shop</a>
+                    <button type="submit" class="btn-settings-submit">Save Settings</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <!-- SCRIPT FOR AVATAR PREVIEW -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const fileInput = document.getElementById("profile-picture-input");
+            const avatarPreview = document.getElementById("settings-avatar-preview");
+            const avatarPlaceholder = document.getElementById("settings-avatar-placeholder");
+            const fileNameHint = document.getElementById("file-name-hint");
+
+            if (fileInput) {
+                fileInput.addEventListener("change", function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        fileNameHint.textContent = file.name;
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            if (avatarPreview) {
+                                avatarPreview.src = e.target.result;
+                                avatarPreview.style.display = "block";
+                            }
+                            if (avatarPlaceholder) {
+                                avatarPlaceholder.style.display = "none";
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

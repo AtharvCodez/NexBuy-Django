@@ -1,0 +1,657 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}NexBuy - Your Online Shopping Destination{% endblock %}
+
+{% block active_home %}active{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'NexBuy/css/index.css' %}?v=3.1">
+{% endblock %}
+
+{% block content %}
+    <main class="page-wrapper">
+        <section class="hero">
+            <div class="hero-grid">
+                <!-- LEFT COLUMN: Content -->
+                <div class="hero-left">
+                    <div class="ai-badge">
+                        <i class="ph ph-sparkle"></i>
+                        <span>AI Shopping Assistant Enabled</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Shop Smarter,<br>
+                        Save <span style="color: var(--accent-primary);">Bigger</span>,<br>
+                        Live <span style="color: var(--accent-primary);">Better</span>.
+                    </h1>
+                    <p class="hero-subtitle">
+                        Discover upcoming drops, crazy deals and exclusive offers — all in one place.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'product' %}" class="btn-primary" style="text-decoration: none;">
+                            <i class="ph ph-shopping-bag-open"></i>
+                            Explore Deals
+                        </a>
+                        <a href="#trending-product" class="btn-secondary-outline" style="text-decoration: none;">
+                            <i class="ph ph-play-circle"></i>
+                            See Upcoming Drops
+                        </a>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Interactive Card Stack -->
+                <div class="hero-right">
+                    <div class="card-stack-container">
+                        <!-- Navigation Arrows -->
+                        <button class="stack-nav-btn prev-btn" aria-label="Previous Deal">
+                            <i class="ph ph-caret-left"></i>
+                        </button>
+                        <div class="card-stack">
+                            <!-- Card 1: Flash Deal (Sony Headphones) -->
+                            <div class="stack-card flash-deal-card pos-left" data-index="0">
+                                <div class="card-header">
+                                    <span class="discount-tag" style="background: var(--accent-primary); color: white; border: none; padding: 6px 12px; border-radius: 20px;">-35% OFF</span>
+                                    <span class="badge-label" style="color: var(--accent-primary); font-size: 0.75rem;">FLASH DEAL</span>
+                                </div>
+                                <div class="card-image">
+                                    <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=600&q=80" alt="Sony WH-1000XM5">
+                                </div>
+                                <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 2px;">Sony WH-1000XM5</h3>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: auto;">Wireless Noise Cancelling Headphones</p>
+                                    
+                                    <!-- Countdown Box -->
+                                    <div class="card-content-box" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
+                                            <i class="ph ph-clock" style="color: var(--accent-primary);"></i> Ends in
+                                        </div>
+                                        <div style="display: flex; gap: 8px; align-items: center; font-size: 1.25rem; font-weight: 700; font-variant-numeric: tabular-nums;">
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <span class="timer-h">02</span>
+                                                <span style="font-size: 0.5rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; letter-spacing: 0.5px;">HRS</span>
+                                            </div>
+                                            <span style="color: var(--text-secondary); margin-bottom: 12px;">:</span>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <span class="timer-m">12</span>
+                                                <span style="font-size: 0.5rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; letter-spacing: 0.5px;">MINS</span>
+                                            </div>
+                                            <span style="color: var(--text-secondary); margin-bottom: 12px;">:</span>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <span class="timer-s">52</span>
+                                                <span style="font-size: 0.5rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; letter-spacing: 0.5px;">SECS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="price-section" style="display: flex; align-items: baseline; gap: 6px;">
+                                            <span class="current-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent-primary);">₹24,990</span>
+                                            <span class="original-price" style="font-size: 0.85rem; text-decoration: line-through; color: var(--text-secondary);">₹38,990</span>
+                                        </div>
+                                        <button class="card-action-btn add-to-cart-btn" aria-label="Add to cart" data-product="Sony WH-1000XM5" data-price="24990" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;">
+                                            <i class="ph ph-shopping-cart" style="font-size: 1.1rem;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Upcoming Drop (iPhone 16 Pro) -->
+                            <div class="stack-card upcoming-card pos-center" data-index="1">
+                                <div class="card-header">
+                                    <span class="upcoming-tag" style="background: rgba(167, 139, 250, 0.15); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); padding: 6px 12px; border-radius: 20px;">UPCOMING</span>
+                                    <span class="badge-label" style="color: #a78bfa; font-size: 0.75rem;">LAUNCHING SOON</span>
+                                </div>
+                                <div class="card-image">
+                                    <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=600&q=80" alt="iPhone 16 Pro">
+                                </div>
+                                <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 2px;">iPhone 16 Pro</h3>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: auto;">Next generation. Beyond power.</p>
+                                    
+                                    <!-- Expected Release Box -->
+                                    <div class="card-content-box" style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+                                        <i class="ph ph-calendar" style="color: #a78bfa; font-size: 1.4rem;"></i>
+                                        <div style="display: flex; flex-direction: column;">
+                                            <span style="font-size: 0.65rem; color: var(--text-secondary);">Expected Release</span>
+                                            <span style="font-size: 0.95rem; font-weight: 600; color: white;">Launching in 12 Days</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="price-section" style="display: flex; align-items: baseline; gap: 6px;">
+                                            <span class="current-price" style="font-size: 1.25rem; font-weight: 700; color: white;">₹XX,999</span>
+                                            <span style="font-size: 0.75rem; color: var(--text-secondary); font-style: italic;">Expected</span>
+                                        </div>
+                                        <button class="card-action-btn notify-btn" aria-label="Notify me" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;">
+                                            <i class="ph ph-bell" style="font-size: 1.1rem;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Limited Stock (Nike Air Jordan 1) -->
+                            <div class="stack-card limited-stock-card pos-right" data-index="2">
+                                <div class="card-header">
+                                    <span class="limited-tag" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 12px; border-radius: 20px;">-50% OFF</span>
+                                    <span class="badge-label" style="color: #f87171; font-size: 0.75rem;">LIMITED STOCK</span>
+                                </div>
+                                <div class="card-image">
+                                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&q=80" alt="Nike Air Jordan 1">
+                                </div>
+                                <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 2px;">Nike Air Jordan 1</h3>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: auto;">Retro High OG</p>
+                                    
+                                    <!-- Stock Status Box -->
+                                    <div class="card-content-box warning-box" style="display: flex; align-items: center; gap: 8px; margin-top: 10px; margin-bottom: 10px;">
+                                        <i class="ph-fill ph-fire" style="color: #f87171; font-size: 1.2rem;"></i>
+                                        <span style="color: #f87171; font-size: 0.85rem;">Only <strong style="color: white;">23 units left!</strong></span>
+                                    </div>
+
+                                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="price-section" style="display: flex; align-items: baseline; gap: 6px;">
+                                            <span class="current-price" style="font-size: 1.25rem; font-weight: 700; color: white;">₹6,495</span>
+                                            <span class="original-price" style="font-size: 0.85rem; text-decoration: line-through; color: var(--text-secondary);">₹12,990</span>
+                                        </div>
+                                        <button class="card-action-btn add-to-cart-btn" aria-label="Add to cart" data-product="Nike Air Jordan 1" data-price="6495" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;">
+                                            <i class="ph ph-shopping-cart" style="font-size: 1.1rem;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Flash Deal (PlayStation 5 Slim) -->
+                            <div class="stack-card flash-deal-card pos-hidden-right" data-index="3">
+                                <div class="card-header">
+                                    <span class="discount-tag" style="background: var(--accent-primary); color: white; border: none; padding: 6px 12px; border-radius: 20px;">-15% OFF</span>
+                                    <span class="badge-label" style="color: var(--accent-primary); font-size: 0.75rem;">FLASH DEAL</span>
+                                </div>
+                                <div class="card-image">
+                                    <img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=80" alt="PS5 Slim">
+                                </div>
+                                <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 2px;">PS5 Slim Console</h3>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: auto;">Next-Gen Gaming Redefined</p>
+                                    
+                                    <!-- Countdown Box -->
+                                    <div class="card-content-box" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <div style="font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 6px; display: flex; align-items: center; gap: 4px;">
+                                            <i class="ph ph-clock" style="color: var(--accent-primary);"></i> Ends in
+                                        </div>
+                                        <div style="display: flex; gap: 8px; align-items: center; font-size: 1.25rem; font-weight: 700; font-variant-numeric: tabular-nums;">
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <span class="timer-h">05</span>
+                                                <span style="font-size: 0.5rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; letter-spacing: 0.5px;">HRS</span>
+                                            </div>
+                                            <span style="color: var(--text-secondary); margin-bottom: 12px;">:</span>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <span class="timer-m">45</span>
+                                                <span style="font-size: 0.5rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; letter-spacing: 0.5px;">MINS</span>
+                                            </div>
+                                            <span style="color: var(--text-secondary); margin-bottom: 12px;">:</span>
+                                            <div style="display: flex; flex-direction: column; align-items: center;">
+                                                <span class="timer-s">12</span>
+                                                <span style="font-size: 0.5rem; color: var(--text-secondary); font-weight: 600; margin-top: 2px; letter-spacing: 0.5px;">SECS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="price-section" style="display: flex; align-items: baseline; gap: 6px;">
+                                            <span class="current-price" style="font-size: 1.25rem; font-weight: 700; color: var(--accent-primary);">₹44,990</span>
+                                            <span class="original-price" style="font-size: 0.85rem; text-decoration: line-through; color: var(--text-secondary);">₹54,990</span>
+                                        </div>
+                                        <button class="card-action-btn add-to-cart-btn" aria-label="Add to cart" data-product="PS5 Slim Console" data-price="44990" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;">
+                                            <i class="ph ph-shopping-cart" style="font-size: 1.1rem;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 5: Upcoming Drop (Apple Watch Ultra 2) -->
+                            <div class="stack-card upcoming-card pos-hidden-right" data-index="4">
+                                <div class="card-header">
+                                    <span class="upcoming-tag" style="background: rgba(167, 139, 250, 0.15); color: #a78bfa; border: 1px solid rgba(167, 139, 250, 0.3); padding: 6px 12px; border-radius: 20px;">UPCOMING</span>
+                                    <span class="badge-label" style="color: #a78bfa; font-size: 0.75rem;">LAUNCHING SOON</span>
+                                </div>
+                                <div class="card-image">
+                                    <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?auto=format&fit=crop&w=600&q=80" alt="Apple Watch Ultra 2">
+                                </div>
+                                <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 2px;">Apple Watch Ultra 2</h3>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: auto;">Ultimate rugged smartwatch.</p>
+                                    
+                                    <!-- Expected Release Box -->
+                                    <div class="card-content-box" style="display: flex; align-items: center; gap: 10px; margin-top: 10px; margin-bottom: 10px;">
+                                        <i class="ph ph-calendar" style="color: #a78bfa; font-size: 1.4rem;"></i>
+                                        <div style="display: flex; flex-direction: column;">
+                                            <span style="font-size: 0.65rem; color: var(--text-secondary);">Expected Release</span>
+                                            <span style="font-size: 0.95rem; font-weight: 600; color: white;">Launching in 5 Days</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="price-section" style="display: flex; align-items: baseline; gap: 6px;">
+                                            <span class="current-price" style="font-size: 1.25rem; font-weight: 700; color: white;">₹XX,999</span>
+                                            <span style="font-size: 0.75rem; color: var(--text-secondary); font-style: italic;">Expected</span>
+                                        </div>
+                                        <button class="card-action-btn notify-btn" aria-label="Notify me" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;">
+                                            <i class="ph ph-bell" style="font-size: 1.1rem;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 6: Limited Stock (Keychron Keyboard) -->
+                            <div class="stack-card limited-stock-card pos-hidden-right" data-index="5">
+                                <div class="card-header">
+                                    <span class="limited-tag" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 6px 12px; border-radius: 20px;">-40% OFF</span>
+                                    <span class="badge-label" style="color: #f87171; font-size: 0.75rem;">LIMITED STOCK</span>
+                                </div>
+                                <div class="card-image">
+                                    <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?auto=format&fit=crop&w=600&q=80" alt="Keychron Keyboard">
+                                </div>
+                                <div class="card-body" style="flex: 1; display: flex; flex-direction: column;">
+                                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 2px;">Keychron K2 Keyboard</h3>
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: auto;">Tactile Wireless Keyboard</p>
+                                    
+                                    <!-- Stock Status Box -->
+                                    <div class="card-content-box warning-box" style="display: flex; align-items: center; gap: 8px; margin-top: 10px; margin-bottom: 10px;">
+                                        <i class="ph-fill ph-fire" style="color: #f87171; font-size: 1.2rem;"></i>
+                                        <span style="color: #f87171; font-size: 0.85rem;">Only <strong style="color: white;">12 units left!</strong></span>
+                                    </div>
+
+                                    <div class="card-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
+                                        <div class="price-section" style="display: flex; align-items: baseline; gap: 6px;">
+                                            <span class="current-price" style="font-size: 1.25rem; font-weight: 700; color: white;">₹8,999</span>
+                                            <span class="original-price" style="font-size: 0.85rem; text-decoration: line-through; color: var(--text-secondary);">₹14,999</span>
+                                        </div>
+                                        <button class="card-action-btn add-to-cart-btn" aria-label="Add to cart" data-product="Keychron K2 Keyboard" data-price="8999" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;">
+                                            <i class="ph ph-shopping-cart" style="font-size: 1.1rem;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="stack-nav-btn next-btn" aria-label="Next Deal">
+                            <i class="ph ph-caret-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats strip -->
+            <div class="hero-stats-strip">
+                <div class="stat-item">
+                    <div class="stat-icon-wrapper">
+                        <i class="ph-fill ph-calendar-blank"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h4 class="stat-number" data-target="12">0</h4>
+                        <p class="stat-title">Upcoming Launches</p>
+                        <p class="stat-desc">Exciting products on the way</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon-wrapper">
+                        <i class="ph-fill ph-tag"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h4 class="stat-number" data-target="48">0</h4>
+                        <p class="stat-title">Live Deals</p>
+                        <p class="stat-desc">Grab before they're gone</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon-wrapper">
+                        <i class="ph-fill ph-gift"></i>
+                    </div>
+                    <div class="stat-text">
+                        <h4 class="stat-number" data-target="7">0</h4>
+                        <p class="stat-title">Hidden Rewards</p>
+                        <p class="stat-desc">Exclusive surprises for you</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="logo-bar">
+            <!-- Logo Bar Content -->
+        </section>
+
+        <section class="features" id="features">
+            <div class="features-header">
+                <h2>Why You'll Love NexBuy</h2>
+                <p>We've built a platform designed for speed, security, and convenience.</p>
+            </div>
+
+            <div class="features-tabs">
+                <button class="tab-btn active" data-tab="billing">
+                    <i class="ph ph-credit-card"></i>
+                    Simple Checkout
+                </button>
+                <button class="tab-btn" data-tab="analytics">
+                    <i class="ph ph-truck"></i>
+                    Rapid Delivery
+                </button>
+                <button class="tab-btn" data-tab="automation">
+                    <i class="ph ph-package"></i>
+                    Live Tracking
+                </button>
+                <button class="tab-btn" data-tab="security">
+                    <i class="ph ph-lock"></i>
+                    Ironclad Security
+                </button>
+            </div>
+
+            <div class="features-content">
+                <div class="feature-info">
+                    <h3 id="feature-title">Checkout in Seconds</h3>
+                    <p id="feature-description">Our streamlined checkout process accepts all major cards and digital wallets. Save your info for one-click purchases.</p>
+                    <ul class="feature-list">
+                        <li><i class="ph ph-check-circle"></i> Multiple payment options</li>
+                        <li><i class="ph ph-check-circle"></i> Apple Pay & Google Pay</li>
+                        <li><i class="ph ph-check-circle"></i> Save cards for future use</li>
+                        <li><i class="ph ph-check-circle"></i> Encrypted transactions</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-visual">
+                    <svg id="feature-graph" viewBox="0 0 530 320" style="width: 100%; height: auto; overflow: visible;">
+                        <defs>
+                            <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="var(--accent-primary)" />
+                                <stop offset="100%" stop-color="#f43f5e" />
+                            </linearGradient>
+                            <linearGradient id="area-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="var(--accent-primary)" stop-opacity="0.2" />
+                                <stop offset="100%" stop-color="var(--accent-primary)" stop-opacity="0" />
+                            </linearGradient>
+                            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="4" result="blur" />
+                                <feMerge>
+                                    <feMergeNode in="blur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <!-- Grid Lines -->
+                        <g class="grid-lines">
+                            <!-- 100% -->
+                            <line x1="50" y1="40" x2="480" y2="40" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4 4" />
+                            <!-- 75% -->
+                            <line x1="50" y1="97.5" x2="480" y2="97.5" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4 4" />
+                            <!-- 50% -->
+                            <line x1="50" y1="155" x2="480" y2="155" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4 4" />
+                            <!-- 25% -->
+                            <line x1="50" y1="212.5" x2="480" y2="212.5" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4 4" />
+                            <!-- 0% -->
+                            <line x1="50" y1="270" x2="480" y2="270" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" />
+                        </g>
+
+                        <!-- Y-Axis Labels -->
+                        <g class="y-labels" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 10px; fill: var(--text-secondary);">
+                            <text x="38" y="43" text-anchor="end">100%</text>
+                            <text x="38" y="100.5" text-anchor="end">75%</text>
+                            <text x="38" y="158" text-anchor="end">50%</text>
+                            <text x="38" y="215.5" text-anchor="end">25%</text>
+                            <text x="38" y="273" text-anchor="end">0%</text>
+                        </g>
+
+                        <!-- X-Axis Labels -->
+                        <g class="x-labels" style="font-family: 'Inter', sans-serif; font-weight: 500; font-size: 10px; fill: var(--text-secondary);">
+                            <text id="x-label-0" x="50" y="295" text-anchor="middle">Start</text>
+                            <text id="x-label-1" x="136" y="295" text-anchor="middle">Cart</text>
+                            <text id="x-label-2" x="222" y="295" text-anchor="middle">Pay Info</text>
+                            <text id="x-label-3" x="308" y="295" text-anchor="middle">Verify</text>
+                            <text id="x-label-4" x="394" y="295" text-anchor="middle">Processing</text>
+                            <text id="x-label-5" x="480" y="295" text-anchor="middle">Success</text>
+                        </g>
+
+                        <!-- The Shaded Area Under the Curve -->
+                        <path id="graph-area" d="M 50 270 L 136 270 L 222 270 L 308 270 L 394 270 L 480 270 L 480 270 L 50 270 Z" fill="url(#area-grad)" />
+
+                        <!-- The Animated Curve Path -->
+                        <path id="graph-line" d="M 50 270 L 136 270 L 222 270 L 308 270 L 394 270 L 480 270" fill="none" stroke="url(#line-grad)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+
+                        <!-- Interactive Circles and Value Tooltips -->
+                        <g id="graph-interactive-elements">
+                            <g class="graph-point-group" data-index="0">
+                                <circle id="graph-dot-0" cx="50" cy="270" r="4.5" fill="#ffffff" stroke="var(--accent-primary)" stroke-width="2.5" />
+                                <text id="graph-val-0" x="50" y="260" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="700" font-size="10px" fill="white">0%</text>
+                            </g>
+                            <g class="graph-point-group" data-index="1">
+                                <circle id="graph-dot-1" cx="136" cy="270" r="4.5" fill="#ffffff" stroke="var(--accent-primary)" stroke-width="2.5" />
+                                <text id="graph-val-1" x="136" y="260" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="700" font-size="10px" fill="white">0%</text>
+                            </g>
+                            <g class="graph-point-group" data-index="2">
+                                <circle id="graph-dot-2" cx="222" cy="270" r="4.5" fill="#ffffff" stroke="var(--accent-primary)" stroke-width="2.5" />
+                                <text id="graph-val-2" x="222" y="260" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="700" font-size="10px" fill="white">0%</text>
+                            </g>
+                            <g class="graph-point-group" data-index="3">
+                                <circle id="graph-dot-3" cx="308" cy="270" r="4.5" fill="#ffffff" stroke="var(--accent-primary)" stroke-width="2.5" />
+                                <text id="graph-val-3" x="308" y="260" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="700" font-size="10px" fill="white">0%</text>
+                            </g>
+                            <g class="graph-point-group" data-index="4">
+                                <circle id="graph-dot-4" cx="394" cy="270" r="4.5" fill="#ffffff" stroke="var(--accent-primary)" stroke-width="2.5" />
+                                <text id="graph-val-4" x="394" y="260" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="700" font-size="10px" fill="white">0%</text>
+                            </g>
+                            <g class="graph-point-group" data-index="5">
+                                <circle id="graph-dot-5" cx="480" cy="270" r="4.5" fill="#ffffff" stroke="var(--accent-primary)" stroke-width="2.5" />
+                                <text id="graph-val-5" x="480" y="260" text-anchor="middle" font-family="'Inter', sans-serif" font-weight="700" font-size="10px" fill="white">0%</text>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="parallax-section" id="trending-product">
+            <div class="parallax-layers">
+                <div class="parallax-layer parallax-bg"></div>
+                <div class="parallax-layer parallax-mid"></div>
+                <div class="parallax-layer parallax-fg"></div>
+            </div>
+            <div class="parallax-content">
+                <div class="parallax-header">
+                    <h2>Trending Products Right Now</h2>
+                    <p>Discover what's hot and what everyone is buying today</p>
+                </div>
+                
+                <div class="trending-grid">
+                    <div class="trending-product">
+                        <div style="position: relative;">
+                            <img src="https://idestiny.in/wp-content/uploads/2024/10/airpods-max-select-202409-midnight_FV1.jpeg" alt="AirPods Max Pro" class="trending-image">
+                            <span class="trending-badge">
+                                <i class="ph-fill ph-fire"></i>
+                                Hot Deal
+                            </span>
+                        </div>
+                        <div class="trending-content">
+                            <h3 class="trending-title">AirPods Max Pro</h3>
+                            <p class="trending-description">Premium wireless headphones with active noise cancellation and spatial audio</p>
+                            <div class="trending-stats">
+                                <div class="trending-rating">
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star-half"></i>
+                                    <span>4.8</span>
+                                </div>
+                                <div class="trending-buyers">
+                                    <i class="ph-fill ph-users"></i>
+                                    <span>12.5K bought</span>
+                                </div>
+                            </div>
+                            <div class="trending-footer">
+                                <span class="trending-price">$549</span>
+                                <button class="trending-btn add-to-cart-btn" data-product="AirPods Max Pro" data-price="549" data-currency="$" data-image="https://idestiny.in/wp-content/uploads/2024/10/airpods-max-select-202409-midnight_FV1.jpeg">
+                                    <i class="ph ph-shopping-cart"></i>
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trending-product">
+                        <div style="position: relative;">
+                            <img src="https://www.dennislingo.com/cdn/shop/products/DLMDJS0010_IG_7_a0dc8c3e-69b4-4d4a-b06d-dd1e6df8aec8_1080x.jpg?v=1678539034" alt="Designer Jacket" class="trending-image">
+                            <span class="trending-badge">
+                                <i class="ph-fill ph-fire"></i>
+                                Trending
+                            </span>
+                        </div>
+                        <div class="trending-content">
+                            <h3 class="trending-title">Premium Denim Jacket</h3>
+                            <p class="trending-description">Classic vintage-style denim with modern comfort and sustainable materials</p>
+                            <div class="trending-stats">
+                                <div class="trending-rating">
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                                <div class="trending-buyers">
+                                    <i class="ph-fill ph-users"></i>
+                                    <span>8.3K bought</span>
+                                </div>
+                            </div>
+                            <div class="trending-footer">
+                                <span class="trending-price">$129</span>
+                                <button class="trending-btn add-to-cart-btn" data-product="Premium Denim Jacket" data-price="129" data-currency="$" data-image="https://www.dennislingo.com/cdn/shop/products/DLMDJS0010_IG_7_a0dc8c3e-69b4-4d4a-b06d-dd1e6df8aec8_1080x.jpg?v=1678539034">
+                                    <i class="ph ph-shopping-cart"></i>
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trending-product">
+                        <div style="position: relative;">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTodLFqR1i14ViT7690pnIlqxbwNSmLbTkvTQ&s" alt="Espresso Machine" class="trending-image">
+                            <span class="trending-badge">
+                                <i class="ph-fill ph-fire"></i>
+                                Best Seller
+                            </span>
+                        </div>
+                        <div class="trending-content">
+                            <h3 class="trending-title">Smart Espresso Machine</h3>
+                            <p class="trending-description">Barista-quality coffee at home with app control and precise temperature settings</p>
+                            <div class="trending-stats">
+                                <div class="trending-rating">
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <span>5.0</span>
+                                </div>
+                                <div class="trending-buyers">
+                                    <i class="ph-fill ph-users"></i>
+                                    <span>15.7K bought</span>
+                                </div>
+                            </div>
+                            <div class="trending-footer">
+                                <span class="trending-price">$399</span>
+                                <button class="trending-btn add-to-cart-btn" data-product="Smart Espresso Machine" data-price="399" data-currency="$" data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTodLFqR1i14ViT7690pnIlqxbwNSmLbTkvTQ&s">
+                                    <i class="ph ph-shopping-cart"></i>
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trending-product">
+                        <div style="position: relative;">
+                            <img src="https://m.media-amazon.com/images/I/51yyQiEVvNL._AC_UF1000,1000_QL80_.jpg" alt="Action Camera" class="trending-image">
+                            <span class="trending-badge">
+                                <i class="ph-fill ph-fire"></i>
+                                Popular
+                            </span>
+                        </div>
+                        <div class="trending-content">
+                            <h3 class="trending-title">4K Action Camera Pro</h3>
+                            <p class="trending-description">Capture every adventure in stunning 4K with waterproof design and stabilization</p>
+                            <div class="trending-stats">
+                                <div class="trending-rating">
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star"></i>
+                                    <i class="ph-fill ph-star-half"></i>
+                                    <span>4.7</span>
+                                </div>
+                                <div class="trending-buyers">
+                                    <i class="ph-fill ph-users"></i>
+                                    <span>9.2K bought</span>
+                                </div>
+                            </div>
+                            <div class="trending-footer">
+                                <span class="trending-price">$279</span>
+                                <button class="trending-btn add-to-cart-btn" data-product="4K Action Camera Pro" data-price="279" data-currency="$" data-image="https://m.media-amazon.com/images/I/51yyQiEVvNL._AC_UF1000,1000_QL80_.jpg">
+                                    <i class="ph ph-shopping-cart"></i>
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing" id="pricing">
+            <div class="pricing-header">
+                <h2>Find Your Perfect Plan</h2>
+                <p style="color: var(--text-secondary); margin-top: 1rem;">Choose a plan that fits your shopping needs</p>
+                <div class="pricing-toggle">
+                    <span>Monthly</span>
+                    <div class="toggle-switch" id="pricingToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
+                    <span>Annual</span>
+                </div>
+            </div>
+
+            <div class="pricing-cards">
+                {% for plan in plans %}
+                <div class="pricing-card {% if plan.is_featured_monthly %}featured{% endif %}" data-monthly="{{ plan.monthly_price }}" data-annual="{{ plan.annual_price }}">
+                    <h3>{{ plan.name }}</h3>
+                    <div class="pricing-price">
+                        {% if plan.monthly_price == 0 %}
+                            $0
+                        {% else %}
+                            <span>$</span>{{ plan.monthly_price }}<span>/month</span>
+                        {% endif %}
+                    </div>
+                    <p style="color: var(--text-secondary);">{{ plan.description }}</p>
+                    <ul class="pricing-features">
+                        {% for feature in plan.features_list %}
+                            <li><i class="ph ph-check-circle"></i> {{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                    <a href="{% url 'subscription' %}" class="pricing-cta" style="text-decoration: none; display: block; text-align: center;">
+                        {% if plan.monthly_price == 0 %}Start Shopping{% elif plan.monthly_price < 20 %}Start Pro Trial{% else %}Contact Sales{% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="final-cta">
+            <h2>Find Your Next Favorite Thing</h2>
+            <p>Your one-stop shop for everything you love is just a click away.</p>
+            <a href="{% url 'product' %}" class="btn-primary" style="font-size: 1.1rem; padding: 1.25rem 3rem; text-decoration: none;">
+                <i class="ph ph-magnifying-glass"></i>
+                Start Your Search
+            </a>
+        </section>
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'NexBuy/js/index.js' %}?v=2.0"></script>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}NexBuy - Ticket Details{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'NexBuy/css/complaint_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-wrapper">
+        <div class="detail-container">
+            <a href="{% url 'contact' %}" class="back-link">
+                <i class="ph ph-arrow-left"></i> Back to Complaints
+            </a>
+
+            <div class="ticket-header-block">
+                <div class="ticket-meta-info">
+                    <span class="ticket-id">Ticket #{{ complaint.id }}</span>
+                    <span class="status-badge-detail">Status: Active</span>
+                </div>
+                <h1>{{ complaint.subject }}</h1>
+                <div class="reporter-details">
+                    <div class="avatar">
+                        <i class="ph ph-user"></i>
+                    </div>
+                    <div class="reporter-text">
+                        <p class="reporter-name">Submitted by <strong>{{ complaint.name }}</strong></p>
+                        <p class="reporter-email"><i class="ph ph-envelope-simple"></i> {{ complaint.email }}</p>
+                        <p class="reporter-date"><i class="ph ph-calendar"></i> Filed on {{ complaint.created_at|date:"F d, Y \a\t g:i A" }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <!-- Left: Full Problem Message -->
+                <div class="message-section-card">
+                    <h2><i class="ph ph-file-text"></i> Detailed Query Description</h2>
+                    <div class="message-text-content">
+                        {{ complaint.message|linebreaks }}
+                    </div>
+                </div>
+
+                <!-- Right: AI Summary / Resolution Summary -->
+                <div class="summary-section-card">
+                    <h2><i class="ph ph-sparkle"></i> System Action & Summary</h2>
+                    <div class="summary-content">
+                        <div class="summary-box">
+                            <h3>Query Summary</h3>
+                            <p>{{ complaint.summary }}</p>
+                        </div>
+                        <div class="info-checklist">
+                            <div class="checklist-item">
+                                <i class="ph-fill ph-check-circle success"></i>
+                                <span>Ticket created successfully in support database.</span>
+                            </div>
+                            <div class="checklist-item">
+                                <i class="ph-fill ph-check-circle success"></i>
+                                <span>Support team notified via email dashboard.</span>
+                            </div>
+                            <div class="checklist-item">
+                                <i class="ph-fill ph-hourglass warning"></i>
+                                <span>Awaiting review by an administrator (SLA: 24h).</span>
+                            </div>
+                        </div>
+                        <div class="action-footer">
+                            <p class="sla-text"><i class="ph ph-clock"></i> Typical response window: 12-24 business hours.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

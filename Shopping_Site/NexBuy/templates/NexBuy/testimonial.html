@@ -1,0 +1,186 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}NexBuy - Testimonials{% endblock %}
+
+{% block active_reviews %}active{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'NexBuy/css/testimonial.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-wrapper">
+
+        <!-- HEADER SECTION -->
+        <section class="testimonial-header">
+            <h1>What Our Customers Say</h1>
+            <p>We're trusted by thousands of shoppers worldwide.</p>
+            <div class="overall-rating">
+                <div class="stars">
+                    <i class="ph-fill ph-star"></i>
+                    <i class="ph-fill ph-star"></i>
+                    <i class="ph-fill ph-star"></i>
+                    <i class="ph-fill ph-star"></i>
+                    <i class="ph-fill ph-star-half"></i>
+                </div>
+                <span><strong>{{ avg_rating }}</strong> out of 5</span>
+            </div>
+        </section>
+
+        <!-- STATS SECTION -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <i class="ph ph-users-three"></i>
+                <div class="stat-number" data-target="75">75</div>
+                <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-card">
+                <i class="ph ph-package"></i>
+                <div class="stat-number" data-target="100">100</div>
+                <div class="stat-label">Deliveries Done</div>
+            </div>
+            <div class="stat-card">
+                <i class="ph ph-heartbeat"></i>
+                <div class="stat-number" data-target="85">85</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+        </section>
+
+        <!-- REVIEW GRAPH SECTION -->
+        <section class="review-graph-container">
+            <h2>Customer Rating Distribution</h2>
+            <div class="bar-graph">
+                <!-- 5 Stars -->
+                <div class="bar-row">
+                    <span class="bar-label">5 <i class="ph-fill ph-star"></i></span>
+                    <div class="bar-wrap">
+                        <div class="bar" data-width="{{ distribution.5 }}%">
+                            <span class="bar-percentage">{{ distribution.5 }}%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 4 Stars -->
+                <div class="bar-row">
+                    <span class="bar-label">4 <i class="ph-fill ph-star"></i></span>
+                    <div class="bar-wrap">
+                        <div class="bar" data-width="{{ distribution.4 }}%">
+                            <span class="bar-percentage">{{ distribution.4 }}%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3 Stars -->
+                <div class="bar-row">
+                    <span class="bar-label">3 <i class="ph-fill ph-star"></i></span>
+                    <div class="bar-wrap">
+                        <div class="bar" data-width="{{ distribution.3 }}%">
+                            <span class="bar-percentage">{{ distribution.3 }}%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2 Stars -->
+                <div class="bar-row">
+                    <span class="bar-label">2 <i class="ph-fill ph-star"></i></span>
+                    <div class="bar-wrap">
+                        <div class="bar" data-width="{{ distribution.2 }}%">
+                            <span class="bar-percentage">{{ distribution.2 }}%</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 1 Star -->
+                <div class="bar-row">
+                    <span class="bar-label">1 <i class="ph-fill ph-star"></i></span>
+                    <div class="bar-wrap">
+                        <div class="bar" data-width="{{ distribution.1 }}%">
+                            <span class="bar-percentage">{{ distribution.1 }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL GRID -->
+        <section class="testimonial-grid-container">
+            <h2>Reviews From The Community</h2>
+            <div class="testimonial-grid">
+                
+                {% for review in reviews %}
+                <!-- Review Card -->
+                <div class="testimonial-card">
+                    <div class="testimonial-header-info">
+                        <img src="https://placehold.co/100x100/333/FFF?text={{ review.name|slice:":2" }}" alt="Customer {{ review.name }}">
+                        <div class="customer-info">
+                            <span class="name">{{ review.name }}</span>
+                            <span class="tag">Verified Purchase</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        {% for i in review.star_list.full %}<i class="ph-fill ph-star"></i>{% endfor %}
+                        {% for i in review.star_list.empty %}<i class="ph ph-star"></i>{% endfor %}
+                    </div>
+                    <h3 class="review-title">{{ review.title }}</h3>
+                    <p class="review-text">"{{ review.text }}"</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </section>
+
+        <!-- REVIEW FORM SECTION -->
+        <section class="review-form-container">
+            <h2>Write Your Own Review</h2>
+            <form id="review-form" class="review-form" method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="review-name">Your Name</label>
+                    <input type="text" id="review-name" name="name" class="form-input" placeholder="e.g., Alex S." required>
+                </div>
+                <div class="form-group">
+                    <label for="review-title">Review Title</label>
+                    <input type="text" id="review-title" name="title" class="form-input" placeholder="e.g., Blazing fast delivery!" required>
+                </div>
+                <div class="form-group">
+                    <label>Your Rating</label>
+                    <div class="star-rating-input" id="star-rating-input" data-rating="5">
+                        <i class="ph-fill ph-star selected" data-value="1"></i>
+                        <i class="ph-fill ph-star selected" data-value="2"></i>
+                        <i class="ph-fill ph-star selected" data-value="3"></i>
+                        <i class="ph-fill ph-star selected" data-value="4"></i>
+                        <i class="ph-fill ph-star selected" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="rating-value" name="rating" value="5" required>
+                </div>
+                <div class="form-group">
+                    <label for="review-text">Your Review</label>
+                    <textarea id="review-text" name="text" class="form-input" rows="6" placeholder="Write about your experience..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit-review">
+                    <i class="ph ph-paper-plane-tilt"></i>
+                    Submit Review
+                </button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- TOAST NOTIFICATION -->
+    {% if messages %}
+        <div id="toast-notification" class="toast-notification show">
+            <i class="ph ph-check-circle"></i>
+            {% for message in messages %}
+                <span>{{ message }}</span>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(() => {
+                const toast = document.getElementById('toast-notification');
+                if (toast) toast.classList.remove('show');
+            }, 3000);
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'NexBuy/js/testimonial.js' %}"></script>
+{% endblock %}

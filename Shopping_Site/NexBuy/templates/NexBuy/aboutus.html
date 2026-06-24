@@ -1,0 +1,132 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}NexBuy - About Us{% endblock %}
+
+{% block active_about %}active{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'NexBuy/css/aboutus.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- MAIN PAGE CONTENT -->
+    <main class="page-wrapper">
+
+        <!-- HEADER SECTION -->
+        <section class="about-header">
+            <h1>Our Story</h1>
+            <p>
+                NexBuy was founded by <strong>Atharv Sunil Patole</strong> with one simple idea: online shopping should be faster, smarter, and more personal. Frustrated by impersonal platforms, slow shipping, and endless scrolling, we set out to build an e-commerce experience that actually values your time. From a simple idea to a trusted platform, our journey has been driven by a passion for innovation and a relentless focus on you, our customer.
+            </p>
+        </section>
+
+        <!-- MISSION & VISION -->
+        <section class="content-section">
+            <div class="mission-vision-grid">
+                <div class="about-card">
+                    <i class="ph ph-target"></i>
+                    <h3>Our Mission</h3>
+                    <p>To provide a seamless, AI-powered shopping experience that connects you with what you need, faster. We are committed to offering curated quality, unparalleled speed, and exceptional value.</p>
+                </div>
+                <div class="about-card">
+                    <i class="ph ph-binoculars"></i>
+                    <h3>Our Vision</h3>
+                    <p>To become the world's most trusted and customer-centric e-commerce platform, where technology and human-touch create the perfect shopping journey, every single time.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHAT WE DO -->
+        <section class="content-section">
+            <h2>What We're About</h2>
+            <div class="mission-vision-grid">
+                <div class="about-card">
+                    <i class="ph ph-shopping-bag-open"></i>
+                    <h3>What We Sell</h3>
+                    <p>From the latest in high-tech electronics and gaming to trend-setting fashion, home appliances, and daily groceries, our catalog is curated for quality. We don't just sell everything; we sell the *right* things.</p>
+                </div>
+                <div class="about-card">
+                    <i class="ph ph-users"></i>
+                    <h3>Our Audience</h3>
+                    <p>We build for everyone. Whether you're a tech enthusiast looking for the next big thing, a parent managing a busy household, or a fashion-forward individual, NexBuy is your one-stop shop.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE VALUES -->
+        <section class="content-section">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="about-card">
+                    <i class="ph ph-sparkle"></i>
+                    <h3>Innovation</h3>
+                    <p>We harness the power of AI to create a smarter, more intuitive, and personalized platform for you.</p>
+                </div>
+                <div class="about-card">
+                    <i class="ph ph-user-focus"></i>
+                    <h3>Customer-First</h3>
+                    <p>Your needs are at the center of every decision we make. If you're not happy, we're not done.</p>
+                </div>
+                <div class="about-card">
+                    <i class="ph ph-shield-check"></i>
+                    <h3>Integrity</h3>
+                    <p>We believe in transparent pricing, honest reviews, and secure transactions. No gimmicks, just trust.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMMITMENTS -->
+        <section class="content-section">
+            <h2>Our Commitment to You</h2>
+            <div class="values-grid">
+                <div class="about-card">
+                    <i class="ph ph-truck"></i>
+                    <h3>Quality & Speed</h3>
+                    <p>We partner with top brands and fulfillment centers to ensure every order is high-quality and delivered fast.</p>
+                </div>
+                <div class="about-card">
+                    <i class="ph ph-check-circle"></i>
+                    <h3>Trust & Guarantees</h3>
+                    <p>Shop with confidence. All purchases are backed by our hassle-free return policy and secure payment guarantee.</p>
+                </div>
+                <div class="about-card">
+                    <i class="ph ph-leaf"></i>
+                    <h3>Sustainability</h3>
+                    <p>We are actively working to implement eco-friendly packaging and carbon-neutral shipping options.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOUNDER'S NOTE -->
+        <section class="content-section">
+            <div class="founder-section">
+                <img src="https://placehold.co/150x150/f97316/0a0a0f?text=AP" alt="Founder Atharv Sunil Patole">
+                <h3>"We're not just building another online store; we're building a smarter, more reliable way to shop. Thank you for being a part of our journey."</h3>
+                <p>Atharv Sunil Patole</p>
+                <span>Founder, NexBuy</span>
+            </div>
+        </section>
+        
+        <!-- FINAL CTA -->
+        <section class="final-cta">
+            <h2>Find Your Next Favorite Thing</h2>
+            <a href="{% url 'product' %}" class="btn-primary" style="font-size: 1.1rem; padding: 1.25rem 3rem; text-decoration: none;">
+                <i class="ph ph-shopping-bag-open"></i>
+                Start Shopping Now
+            </a>
+        </section>
+
+        <!-- ASSETS SECTION -->
+        <section class="assets-section">
+            <p>
+                NexBuy is a modern platform built with cutting-edge tools. Our intelligent features are powered by large language models including <a href="#" target="_blank">Google Gemini</a> and <a href="#" target="_blank">ChatGPT</a>. Visual assets are sourced from <a href="#" target="_blank">Google Images</a> and <a href="#" target="_blank">Phosphor Icons</a>.
+            </p>
+        </section>
+
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'NexBuy/js/aboutus.js' %}"></script>
+{% endblock %}

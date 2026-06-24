@@ -1,0 +1,150 @@
+{% extends 'NexBuy/base.html' %}
+{% load static %}
+
+{% block title %}NexBuy - Contact Us{% endblock %}
+
+{% block active_contact %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'NexBuy/css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- MAIN PAGE CONTENT -->
+<main class="page-wrapper">
+
+    <!-- HEADER SECTION -->
+    <section class="contact-header">
+        <h1>Get In Touch</h1>
+        <p>
+            Have a question, a suggestion, or just want to say hi? We'd love to hear from you.
+            Fill out the form below or use one of our contact channels.
+        </p>
+    </section>
+
+    <!-- CONTACT GRID -->
+    <section class="contact-grid">
+
+        <!-- CONTACT FORM -->
+        <div class="contact-form-container">
+            <h2>Send Us a Message</h2>
+            <form id="contact-form" method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="contact-name">Your Name</label>
+                    <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g., Alex S."
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Your Email</label>
+                    <input type="email" id="contact-email" name="email" class="form-input"
+                        placeholder="e.g., alex@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject">Subject</label>
+                    <input type="text" id="contact-subject" name="subject" class="form-input"
+                        placeholder="e.g., Question about my order" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Your Message</label>
+                    <textarea id="contact-message" name="message" class="form-input" rows="6"
+                        placeholder="Write your message here..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit-message">
+                    <i class="ph ph-paper-plane-tilt"></i>
+                    Send Message
+                </button>
+            </form>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="contact-info-container">
+            <div class="contact-info-card">
+                <i class="ph ph-envelope"></i>
+                <h3>Email Us</h3>
+                <p>For support, press, or partnerships, drop us a line.</p>
+                <a href="mailto:support@nexbuy.com">support@nexbuy.com</a>
+            </div>
+            <div class="contact-info-card">
+                <i class="ph ph-phone"></i>
+                <h3>Call Us</h3>
+                <p>Our support team is available from 9 AM to 5 PM, Mon-Fri.</p>
+                <a href="tel:+1234567890">+1 (234) 567-890</a>
+            </div>
+            <div class="contact-info-card">
+                <i class="ph ph-map-pin"></i>
+                <h3>Visit Us</h3>
+                <p>
+                    Khandagiri, Jagamara<br>
+                    Bhubaneswar, Odisha 751030<br>
+                    India
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- RECENT COMPLAINTS SECTION -->
+    <section class="recent-complaints-section" style="margin-top: 5rem; padding-bottom: 2rem;">
+        <h2
+            style="font-size: 2.2rem; margin-bottom: 1.5rem; text-align: center; font-weight: 800; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            Recent Customer Queries & Issues</h2>
+        <p
+            style="text-align: center; color: var(--text-secondary); max-width: 600px; margin: 0 auto 3rem; font-size: 1.1rem; line-height: 1.6;">
+            Below are the support tickets and query tickets filed by our customers. Click on any ticket to view details
+            and its AI-generated resolution summary.
+        </p>
+        <div class="complaints-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            {% for msg in complaints %}
+            <div class="complaint-card"
+                style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 2rem; transition: all 0.3s ease; position: relative;">
+                <span class="status-badge"
+                    style="position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(249, 115, 22, 0.1); color: var(--accent-cyan); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; border: 1px solid rgba(249, 115, 22, 0.3); font-weight: 600;">Open
+                    Ticket</span>
+                <h3
+                    style="font-size: 1.3rem; margin-bottom: 0.75rem; padding-right: 6.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-primary); font-weight: 700;">
+                    {{ msg.subject }}</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">By <strong>{{ msg.name }}</strong> on {{ msg.created_at|date:"M d, Y" }}</p>
+                <p
+                    style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6; height: 4.8em;">
+                    {{ msg.message }}
+                </p>
+                <a href="{% url 'complaint_detail' msg.id %}" class="btn-view-details"
+                    style="display: inline-flex; align-items: center; gap: 6px; color: var(--accent-primary); text-decoration: none; font-weight: 700; font-size: 1rem; transition: all 0.3s;">
+                    View Ticket <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+            {% empty %}
+            <div
+                style="text-align: center; color: var(--text-secondary); grid-column: 1 / -1; padding: 3rem 0; background: var(--bg-card); border: 1px dashed var(--border-subtle); border-radius: 16px;">
+                <i class="ph ph-chat-circle-dots"
+                    style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem; display: block;"></i>
+                <p style="font-size: 1.1rem;">No queries submitted yet. Use the form above to register your issue.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</main>
+
+<!-- TOAST NOTIFICATION -->
+{% if messages %}
+<div id="toast-notification" class="toast-notification show">
+    <i class="ph ph-check-circle"></i>
+    {% for message in messages %}
+    <span>{{ message }}</span>
+    {% endfor %}
+</div>
+<script>
+    setTimeout(() => {
+        const toast = document.getElementById('toast-notification');
+        if (toast) toast.classList.remove('show');
+    }, 3000);
+</script>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'NexBuy/js/contact.js' %}"></script>
+{% endblock %}
