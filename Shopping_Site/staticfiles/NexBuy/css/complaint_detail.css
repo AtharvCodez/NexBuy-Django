@@ -1,0 +1,222 @@
+/* complaint_detail.css */
+
+.detail-container {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: var(--accent-glow);
+}
+
+.ticket-header-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.ticket-header-block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-primary));
+}
+
+.ticket-meta-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.ticket-id {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.status-badge-detail {
+    background: rgba(249, 115, 22, 0.15);
+    color: var(--accent-glow);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border: 1px solid var(--accent-primary);
+}
+
+.ticket-header-block h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.reporter-details {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--accent-primary);
+}
+
+.reporter-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.reporter-name {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.reporter-email, .reporter-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.message-section-card, .summary-section-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 2.5rem;
+}
+
+.message-section-card h2, .summary-section-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message-section-card h2 i, .summary-section-card h2 i {
+    color: var(--accent-primary);
+}
+
+.message-text-content {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.summary-box {
+    background: rgba(255, 255, 255, 0.02);
+    border-left: 4px solid var(--accent-cyan);
+    padding: 1.25rem;
+    border-radius: 0 12px 12px 0;
+}
+
+.summary-box h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.summary-box p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.info-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.checklist-item i {
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.checklist-item i.success {
+    color: #4caf50;
+}
+
+.checklist-item i.warning {
+    color: #ff9800;
+}
+
+.action-footer {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.sla-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+@media (max-width: 992px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
